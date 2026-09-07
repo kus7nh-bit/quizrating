@@ -197,9 +197,9 @@ def person_responses(person_name):
 # START APPLICATION
 # ========================================
 
-if __name__ == "__main__":
+init_db()
 
-    init_db()
+if __name__ == "__main__":
 
     app.run(
         host="0.0.0.0",
