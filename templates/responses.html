@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Responses</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+    <h1>Individual Responses</h1>
+
+
+    <!-- ========================= -->
+    <!-- SELECT PERSON -->
+    <!-- ========================= -->
+
+    <label for="personSelect">
+
+        Select Person
+
+    </label>
+
+
+    <select id="personSelect">
+
+        <option value="">
+
+            Select a person
+
+        </option>
+
+    </select>
+
+
+    <!-- ========================= -->
+    <!-- RESULTS -->
+    <!-- ========================= -->
+
+    <div id="resultContainer">
+
+        <p>
+            Select a person to view their responses.
+        </p>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- BACK BUTTON -->
+    <!-- ========================= -->
+
+    <button
+    type="button"
+    class="back-survey-btn"
+    onclick="window.location.href='/'">
+
+    Back to Survey
+
+</button>
+
+
+</div>
+
+
+<script>
+
+
+// ========================================
+// LOAD PEOPLE
+// ========================================
+
+async function loadPeople() {
+
+    try {
+
+        const response =
+            await fetch("/people");
+
+
+        const people =
+            await response.json();
+
+
+        const select =
+            document.getElementById(
+                "personSelect"
+            );
+
+
+        select.innerHTML = `
+
+            <option value="">
+
+                Select a person
+
+            </option>
+
+        `;
+
+
+        people.forEach(person => {
+
+            const option =
+                document.createElement("option");
+
+
+            option.value =
+                person;
+
+
+            option.textContent =
+                person;
+
+
+            select.appendChild(option);
+
+        });
+
+
+    } catch (error) {
+
+        console.error(
+            "Error loading people:",
+            error
+        );
+
+    }
+
+}
+
+
+// ========================================
+// PERSON SELECT
+// ========================================
+
+document
+    .getElementById("personSelect")
+    .addEventListener(
+        "change",
+        function () {
+
+            const person =
+                this.value;
+
+
+            if (!person) {
+
+                document
+                    .getElementById(
+                        "resultContainer"
+                    )
+                    .innerHTML = `
+
+                        <p>
+                            Select a person to view their responses.
+                        </p>
+
+                    `;
+
+                return;
+            }
+
+
+            loadPersonResults(person);
+
+        }
+    );
+
+
+// ========================================
+// LOAD PERSON RESULTS
+// ========================================
+
+async function loadPersonResults(person) {
+
+    try {
+
+        const response =
+            await fetch(
+                "/responses/" +
+                encodeURIComponent(person)
+            );
+
+
+        const data =
+            await response.json();
+
+
+        const container =
+            document.getElementById(
+                "resultContainer"
+            );
+
+
+        container.innerHTML = "";
+
+
+        if (data.length === 0) {
+
+            container.innerHTML =
+                "<p>No responses found.</p>";
+
+            return;
+
+        }
+
+
+        let total = 0;
+
+
+        data.forEach(item => {
+
+            total += Number(item.rating);
+
+
+            const result =
+                document.createElement("div");
+
+
+            result.className =
+                "result-item";
+
+
+            const percentage =
+                (item.rating / 5) * 100;
+
+
+            result.innerHTML = `
+
+                <div class="question">
+
+                    ${item.question}
+
+                </div>
+
+
+                <div class="rating-row">
+
+
+                    <div class="bar-container">
+
+                        <div
+                            class="bar"
+                            style="width:${percentage}%">
+
+                            ${item.rating} / 5
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            `;
+
+
+            container.appendChild(result);
+
+        });
+
+
+        // ========================================
+        // AVERAGE
+        // ========================================
+
+        const average =
+            total / data.length;
+
+
+        const averageElement =
+            document.createElement("h3");
+
+
+        averageElement.innerHTML =
+
+            `Overall Average: ${average.toFixed(2)} / 5`;
+
+
+        container.appendChild(
+            averageElement
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Error loading responses:",
+            error
+        );
+
+    }
+
+}
+
+
+// ========================================
+// INITIAL LOAD
+// ========================================
+
+loadPeople();
+
+
+</script>
+
+
+</body>
+
+</html>

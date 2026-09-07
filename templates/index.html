@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Rating App</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Rating Survey</h1>
+
+    <!-- ========================= -->
+    <!-- PARTICIPANT SECTION -->
+    <!-- ========================= -->
+
+    <div id="surveySection">
+
+        <div class="name-box">
+
+            <label>Your Name</label>
+
+            <input
+                type="text"
+                id="personName"
+                placeholder="Enter your name"
+            >
+
+        </div>
+
+
+        <!-- QUESTIONS -->
+
+        <div id="questions">
+
+            <div class="question">
+
+                <h3>
+                    1. The LPS MST and SzP MST team collaborate effectively to achieve common project and shopfloor objectives.
+                </h3>
+
+                <div class="rating">
+
+                    <button data-rating="1">1</button>
+                    <button data-rating="2">2</button>
+                    <button data-rating="3">3</button>
+                    <button data-rating="4">4</button>
+                    <button data-rating="5">5</button>
+
+                </div>
+
+            </div>
+
+
+            <div class="question">
+
+                <h3>
+                    2. I receive timely support from SzP/MST colleagues when I need assistance with project or shopfloor-related topics.
+                </h3>
+
+                <div class="rating">
+
+                    <button data-rating="1">1</button>
+                    <button data-rating="2">2</button>
+                    <button data-rating="3">3</button>
+                    <button data-rating="4">4</button>
+                    <button data-rating="5">5</button>
+
+                </div>
+
+            </div>
+
+
+            <div class="question">
+
+                <h3>
+                    3. Communication between the LPS MST and SzP MST teams is clear, transparent, and constructive.
+                </h3>
+
+                <div class="rating">
+
+                    <button data-rating="1">1</button>
+                    <button data-rating="2">2</button>
+                    <button data-rating="3">3</button>
+                    <button data-rating="4">4</button>
+                    <button data-rating="5">5</button>
+
+                </div>
+
+            </div>
+
+
+            <div class="question">
+
+                <h3>
+                    4. Knowledge, experiences, and best practices are shared openly across both teams.
+                </h3>
+
+                <div class="rating">
+
+                    <button data-rating="1">1</button>
+                    <button data-rating="2">2</button>
+                    <button data-rating="3">3</button>
+                    <button data-rating="4">4</button>
+                    <button data-rating="5">5</button>
+
+                </div>
+
+            </div>
+
+
+            <div class="question">
+
+                <h3>
+                    5. Individual connect with MST colleagues.
+                </h3>
+
+                <div class="rating">
+
+                    <button data-rating="1">1</button>
+                    <button data-rating="2">2</button>
+                    <button data-rating="3">3</button>
+                    <button data-rating="4">4</button>
+                    <button data-rating="5">5</button>
+
+                </div>
+
+            </div>
+
+            <div class="question">
+
+                <h3>
+                    6. There is mutual trust and respect between team members across both locations.
+                </h3>
+
+                <div class="rating">
+
+                    <button data-rating="1">1</button>
+                    <button data-rating="2">2</button>
+                    <button data-rating="3">3</button>
+                    <button data-rating="4">4</button>
+                    <button data-rating="5">5</button>
+
+                </div>
+
+            </div>
+
+            <div class="question">
+
+                <h3>
+                    7. I am satisfied with the level of collaboration and teamwork between LPS MST & SzP MST.
+                </h3>
+
+                <div class="rating">
+
+                    <button data-rating="1">1</button>
+                    <button data-rating="2">2</button>
+                    <button data-rating="3">3</button>
+                    <button data-rating="4">4</button>
+                    <button data-rating="5">5</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="submit-btn"
+            onclick="submitSurvey()">
+
+            Submit Rating
+
+        </button>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- RESULTS SECTION -->
+    <!-- ========================= -->
+
+    <button
+    type="button"
+    class="view-responses-btn"
+    onclick="goToResponses()">
+
+    View Responses
+
+</button>
+
+<script>
+function goToResponses() {
+    window.location.href = "/responses";
+}
+</script>
+</div>
+
+
+<script
+    src="{{ url_for('static', filename='script.js') }}">
+</script>
+
+</body>
+
+</html>
